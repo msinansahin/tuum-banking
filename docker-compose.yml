@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    container_name: banking-db
+    environment:
+      POSTGRES_PASSWORD: ${BANKING_ACCOUNT_DATASOURCE_USERNAME}
+      POSTGRES_USER: ${BANKING_ACCOUNT_DATASOURCE_USERNAME}
+      POSTGRES_DB: banking
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql:/var/lib/postgresql
+  rabbitmq:
+    container_name: banking-rabbitmq
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  # application services
+  banking-account:
+    container_name: banking-account
+    build: .
+    image: banking/account:0.0.1-SNAPSHOT
+    ports:
+      - "${BANKING_ACCOUNT_PORT}:8083"
+    environment:
+      spring.datasource.url: ${BANKING_ACCOUNT_DATASOURCE_URL}
+      spring.datasource.username: ${BANKING_ACCOUNT_DATASOURCE_USERNAME}
+      spring.datasource.password: ${BANKING_ACCOUNT_DATASOURCE_PASSWORD}
+      spring.rabbitmq.host: ${BANKING_ACCOUNT_RABBITMQ_HOST}
+      spring.rabbitmq.port: ${BANKING_ACCOUNT_RABBITMQ_PORT}
+    depends_on:
+      - db
+      - rabbitmq
+    restart: on-failure
+volumes:
+  postgresql:

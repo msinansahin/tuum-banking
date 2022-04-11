@@ -1,0 +1,22 @@
+server:
+  port: 8083
+  error:
+    include-message: always # for validation messages
+springdoc:
+  swagger-ui:
+    enabled: true
+    disable-swagger-default-url: true
+    display-query-params: true
+  model-converters:
+    pageable-converter:
+      enabled: true
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/local_banking
+    username: banking
+    password: banking
+  rabbitmq:
+    port: 233
+    password: 22
+    username: 22

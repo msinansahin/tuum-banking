@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+    <changeSet id="0000.initial" author="sinan">
+        <sql>
+            CREATE TYPE country_enum AS ENUM ('EST');
+            CREATE TYPE currency_enum AS ENUM ('EUR', 'SEK', 'GBP', 'USD');
+            CREATE TYPE direction_enum AS ENUM ('IN', 'OUT');
+        </sql>
+    </changeSet>
+</databaseChangeLog>
